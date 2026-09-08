@@ -63,11 +63,12 @@ Deno.serve(async (req: Request) => {
   // ---- leads (Data Core): mesmo padrão do CHECKOUT · Blindado (telefone sem 55)
   // leads.phone no Data Core aparece como +5592..., 5592..., 92... e até sem o 9º dígito (bug Sendflow):
   // casa pelo sufixo DDD+9+8dígitos ou DDD+8dígitos
-  const { data: found } = await sb.from("leads").select("id")
-    // (dentro de .or() o curinga do PostgREST é * — % viraria literal)
-    .or(`phone.like.*${pp.ddd}9${pp.last8},phone.like.*${pp.ddd}${pp.last8}`)
-    .order("created_at", { ascending: true }).limit(1);
-  let lead_id: string | null = found?.[0]?.id ?? null;
+  let lead_id: string | null = null;
+  for (const pat of [`%${pp.ddd}9${pp.last8}`, `%${pp.ddd}${pp.last8}`]) {
+    const { data: found } = await sb.from("leads").select("id").like("phone", pat)
+      .order("created_at", { ascending: true }).limit(1);
+    if (found?.length) { lead_id = found[0].id; break; }
+  }
   const ORIG = "bio_deltafabiosilva";
   if (!lead_id) {
     const { data: ins, error } = await sb.from("leads").insert({
