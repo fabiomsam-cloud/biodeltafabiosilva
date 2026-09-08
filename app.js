@@ -54,10 +54,10 @@
     `<a href="${esc(outUrl(r.url))}" target="_blank" rel="noopener" title="${esc(r.label)}" data-click="rede:${r.id}">${ICONS[r.id] || ""}</a>`).join("");
 
   /* ---------- catálogo ---------- */
-  const coverStyle = (p) => p.capa ? `style="background-image:url('${esc(p.capa)}')"` : "";
+  const coverImg = (p) => p.capa ? `<img class="cimg" src="${esc(p.capa)}" alt="" loading="lazy" onerror="this.remove()">` : "";
   $("#produtos").innerHTML = B.produtos.map((p) => `
     <button class="prod" data-prod="${p.code}" aria-label="${esc(p.nome)}">
-      <div class="cover tema-${p.tema || "grafite"}" ${coverStyle(p)}><span class="ey">${esc(p.eyebrow)}</span><em>${esc(p.resumo)}</em></div>
+      <div class="cover tema-${p.tema || "grafite"}">${coverImg(p)}<span class="ey">${esc(p.eyebrow)}</span><em>${esc(p.resumo)}</em></div>
       <div class="pbody"><div><h3>${esc(p.nome)}</h3><p>${esc(p.desc.split(".")[0])}.</p></div>
         <div class="price">${esc(p.preco)}${p.precoNota ? `<small>${esc(p.precoNota)}</small>` : ""}</div></div>
     </button>`).join("");
@@ -78,7 +78,7 @@
     const gate = p.tipo === "anne";
     $("#pm").innerHTML = `
       <div class="x"><button aria-label="Fechar" onclick="document.getElementById('pmodal').classList.remove('open')">✕</button></div>
-      <div class="cover tema-${p.tema || "grafite"}" ${coverStyle(p)}><span class="ey">${esc(p.eyebrow)}</span><em>${esc(p.resumo)}</em></div>
+      <div class="cover tema-${p.tema || "grafite"}">${coverImg(p)}<span class="ey">${esc(p.eyebrow)}</span><em>${esc(p.resumo)}</em></div>
       <h3>${esc(p.nome)}</h3>
       <div class="price">${esc(p.preco)}${p.precoNota ? `<small>${esc(p.precoNota)}</small>` : ""}</div>
       <p>${esc(p.desc)}</p>
