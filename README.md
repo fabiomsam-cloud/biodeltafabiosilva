@@ -16,3 +16,8 @@ Link da bio com concierge (Anne), catálogo e captura de leads → SOU Data Core
 
 ## Deploy
 GitHub Pages (branch `main`, raiz). `git push` publica.
+
+## Notas de engenharia (08/09/2026)
+- `leads` tem ~444k linhas; lookup por telefone usa `fn_phone_norm(phone)` + índice `ix_leads_phone_norm` (migration `bio_phone_norm_index`). LIKE com curinga à esquerda estoura o `statement_timeout` de 8s do PostgREST.
+- `campanhas_blindado.event_type`: `checkout_blindado` (site) × `bio_lead` (bio). Régua e métricas redeployadas via `_gen_anne_blindado.py` / `_gen_anne_blindado_metricas.py`.
+- Templates Meta aprovados: `bio_delta_elite_prf_1/2`, `bio_delta_elite_prf_adm_1/2` (só {{1}} nome, {{2}} Anne).
