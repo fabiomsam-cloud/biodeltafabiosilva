@@ -63,12 +63,9 @@ Deno.serve(async (req: Request) => {
   // ---- leads (Data Core): mesmo padrão do CHECKOUT · Blindado (telefone sem 55)
   // leads.phone no Data Core aparece como +5592..., 5592..., 92... e até sem o 9º dígito (bug Sendflow):
   // casa pelo sufixo DDD+9+8dígitos ou DDD+8dígitos
-  let lead_id: string | null = null;
-  for (const pat of [`%${pp.ddd}9${pp.last8}`, `%${pp.ddd}${pp.last8}`]) {
-    const { data: found } = await sb.from("leads").select("id").like("phone", pat)
-      .order("created_at", { ascending: true }).limit(1);
-    if (found?.length) { lead_id = found[0].id; break; }
-  }
+  // (fn_bio_find_lead: SQL no banco — filtros like via PostgREST não casavam o "+55")
+  const { data: foundId } = await sb.rpc("fn_bio_find_lead", { p_ddd: pp.ddd, p_last8: pp.last8 });
+  let lead_id: string | null = (foundId as string | null) ?? null;
   const ORIG = "bio_deltafabiosilva";
   if (!lead_id) {
     const { data: ins, error } = await sb.from("leads").insert({
