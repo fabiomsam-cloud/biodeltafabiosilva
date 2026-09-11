@@ -39,7 +39,7 @@
   $("#foto").src = P.foto;
   $("#foto").onerror = function () { this.onerror = null; this.src = P.fotoFallback; };
   $("#cargo").textContent = P.cargo;
-  $("#nome").textContent = P.nome;
+  { const w = P.nome.split(" "); $("#nome").innerHTML = esc(w[0]) + "<br>" + esc(w.slice(1).join(" ")); }
   $("#handle").textContent = P.handle;
   $("#tagline").innerHTML = esc(P.tagline[0]) + "<br><b>" + esc(P.tagline[1]) + "</b>";
 
@@ -54,12 +54,17 @@
     `<a href="${esc(r.url)}" target="_blank" rel="noopener" title="${esc(r.label)}" data-click="rede:${r.id}">${ICONS[r.id] || ""}</a>`).join("");
 
   /* ---------- catálogo ---------- */
-  const coverImg = (p) => p.capa ? `<img class="cimg" src="${esc(p.capa)}" alt="" loading="lazy" onerror="this.remove()">` : "";
+  const tile = (p, big) => `<div class="tile tema-${p.tema || "grafite"}${big ? " big" : ""}">${p.capa ? `<img src="${esc(p.capa)}" alt="" loading="lazy" onerror="this.remove()">` : ""}<span>${esc(p.sigla || p.nome.slice(0, 3))}</span></div>`;
   $("#produtos").innerHTML = B.produtos.map((p) => `
     <button class="prod" data-prod="${p.code}" aria-label="${esc(p.nome)}">
-      <div class="cover tema-${p.tema || "grafite"}">${coverImg(p)}<span class="ey">${esc(p.eyebrow)}</span><em>${esc(p.resumo)}</em></div>
-      <div class="pbody"><div><h3>${esc(p.nome)}</h3><p>${esc(p.desc.split(".")[0])}.</p></div>
-        <div class="price">${esc(p.preco)}${p.precoNota ? `<small>${esc(p.precoNota)}</small>` : ""}</div></div>
+      ${tile(p)}
+      <div class="pinfo">
+        <div class="ey">${esc(p.eyebrow)}</div>
+        <h3>${esc(p.nome)}</h3>
+        <p>${esc(p.resumo)}</p>
+        <div class="price">${esc(p.preco)}${p.precoNota ? ` <small>${esc(p.precoNota)}</small>` : ""}</div>
+      </div>
+      <span class="chev">›</span>
     </button>`).join("");
   document.querySelectorAll(".prod").forEach((el) => el.addEventListener("click", () => openProd(el.dataset.prod)));
 
@@ -78,8 +83,7 @@
     const gate = p.tipo === "anne";
     $("#pm").innerHTML = `
       <div class="x"><button aria-label="Fechar" onclick="document.getElementById('pmodal').classList.remove('open')">✕</button></div>
-      <div class="cover tema-${p.tema || "grafite"}">${coverImg(p)}<span class="ey">${esc(p.eyebrow)}</span><em>${esc(p.resumo)}</em></div>
-      <h3>${esc(p.nome)}</h3>
+      <div class="phead">${tile(p, true)}<div><div class="ey">${esc(p.eyebrow)}</div><h3>${esc(p.nome)}</h3></div></div>
       <div class="price">${esc(p.preco)}${p.precoNota ? `<small>${esc(p.precoNota)}</small>` : ""}</div>
       <p>${esc(p.desc)}</p>
       <div class="mini">

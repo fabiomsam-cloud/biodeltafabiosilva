@@ -15,8 +15,8 @@ window.BIO = {
     handle: "@deltafabiosilva",
     cargo: "Delegado de Polícia · Professor",
     tagline: ["Responda 5 perguntas e eu te digo", "o caminho mais curto até a farda."],
-    // foto: assets/delta.jpg (placeholder até o Fábio enviar a foto em alta)
-    foto: "assets/delta.jpg",
+    // foto recortada (fundo transparente) — hero usa o busto; og.jpg usa a inteira
+    foto: "assets/delta-busto.webp",
     fotoFallback: "assets/delta-silhueta.svg",
   },
 
@@ -42,11 +42,12 @@ window.BIO = {
   // PRODUTOS — ordem = ordem do catálogo na página
   // tipo: "anne" (Elite → lead entra na régua da Anne) | "externo" (link oficial, sem Anne)
   // cta: texto do botão principal; url: destino (Hubla/oficial); utm: acrescentado na url
-  // capa: imagem (assets/) ou null → gradiente `tema`
+  // sigla: 2-4 caracteres da insígnia do card (usada até existir capa); capa: imagem (assets/) ou null → gradiente `tema`
   // ------------------------------------------------------------------
   produtos: [
     {
       code: "elite_prf",
+      sigla: "PRF",
       nome: "Mentoria Elite PRF",
       eyebrow: "MENTORIA · NÍVEL SUPERIOR",
       resumo: "Acompanhamento de perto até a aprovação",
@@ -57,11 +58,12 @@ window.BIO = {
       url: "https://hub.la/r/elite_prf_anneia_cartao",
       tipo: "anne",
       tema: "marinho",
-      capa: "assets/capa-elite-prf.jpg",
+      capa: null,
       pitch: "{nome}, pelo que você me contou, você não precisa de mais conteúdo solto. Precisa de alguém do lado corrigindo a rota toda semana até a prova. A Elite PRF é exatamente isso.",
     },
     {
       code: "elite_prf_adm",
+      sigla: "ADM",
       nome: "Mentoria Elite PRF Administrativo",
       eyebrow: "MENTORIA · NÍVEL MÉDIO",
       resumo: "A porta de entrada na PRF sem diploma",
@@ -72,11 +74,12 @@ window.BIO = {
       url: "https://hub.la/r/elite_prf_adm_anneia_cartao",
       tipo: "anne",
       tema: "marinho",
-      capa: "assets/capa-elite-prf-adm.jpg",
+      capa: null,
       pitch: "{nome}, com ensino médio você já pode entrar na PRF pelo cargo administrativo. É a rota mais curta pra farda — e a Elite PRF ADM foi montada exatamente pra esse concurso.",
     },
     {
       code: "playpassei",
+      sigla: "▶",
       nome: "Play Passei",
       eyebrow: "PLATAFORMA · ESTUDO POR MÚSICAS",
       resumo: "Memorize a matéria ouvindo",
@@ -87,11 +90,12 @@ window.BIO = {
       url: "https://playpassei.com.br/",
       tipo: "externo",
       tema: "violeta",
-      capa: "assets/capa-playpassei.jpg",
+      capa: null,
       pitch: "{nome}, com pouco tempo por dia o que salva é estudar nos intervalos que ninguém usa. O Play Passei transforma a matéria em música — você memoriza no trânsito, na academia, no plantão.",
     },
     {
       code: "souquestoes",
+      sigla: "?",
       nome: "Sou Questões",
       eyebrow: "GRÁTIS · PRATIQUE COM IA",
       resumo: "Treine com questões corrigidas por IA",
@@ -102,7 +106,7 @@ window.BIO = {
       url: "https://souquestoes.com.br/auth",
       tipo: "externo",
       tema: "grafite",
-      capa: "assets/capa-souquestoes.jpg",
+      capa: null,
       pitch: "{nome}, quem já fez prova sabe: o que decide é treino de questão. O Sou Questões te deixa praticar de graça, com correção por IA, no estilo da sua banca.",
     },
   ],
