@@ -13,7 +13,7 @@ window.BIO = {
   perfil: {
     nome: "Delta Fábio Silva",
     handle: "@deltafabiosilva",
-    cargo: "Delegado de Polícia · Professor",
+    cargo: "Delegado · Professor",
     tagline: ["Responda 5 perguntas e eu te digo", "o caminho mais curto até a farda."],
     // foto recortada (fundo transparente) — hero usa o busto; og.jpg usa a inteira
     foto: "assets/delta-busto.webp",
@@ -53,7 +53,7 @@ window.BIO = {
       resumo: "Acompanhamento de perto até a aprovação",
       desc: "Direcionamento semanal, correção de rota, simulados no estilo da banca e suporte direto do time do Delta até o dia da prova. Para quem quer tratar a farda como projeto, não como sorte.",
       preco: "12x de R$ 159,77",
-      precoNota: "ou consulte condição à vista com a Anne",
+      precoNota: "ou à vista com a Anne",
       cta: "Quero minha vaga na Elite PRF",
       url: "https://hub.la/r/elite_prf_anneia_cartao",
       tipo: "anne",
