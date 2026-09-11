@@ -58,7 +58,7 @@ window.BIO = {
       url: "https://hub.la/r/elite_prf_anneia_cartao",
       tipo: "anne",
       tema: "marinho",
-      capa: null,
+      capa: "assets/capa-elite_prf.webp",
       pitch: "{nome}, pelo que você me contou, você não precisa de mais conteúdo solto. Precisa de alguém do lado corrigindo a rota toda semana até a prova. A Elite PRF é exatamente isso.",
     },
     {
@@ -74,7 +74,7 @@ window.BIO = {
       url: "https://hub.la/r/elite_prf_adm_anneia_cartao",
       tipo: "anne",
       tema: "marinho",
-      capa: null,
+      capa: "assets/capa-elite_prf_adm.webp",
       pitch: "{nome}, com ensino médio você já pode entrar na PRF pelo cargo administrativo. É a rota mais curta pra farda — e a Elite PRF ADM foi montada exatamente pra esse concurso.",
     },
     {
@@ -90,7 +90,7 @@ window.BIO = {
       url: "https://playpassei.com.br/",
       tipo: "externo",
       tema: "violeta",
-      capa: null,
+      capa: "assets/capa-playpassei.webp",
       pitch: "{nome}, com pouco tempo por dia o que salva é estudar nos intervalos que ninguém usa. O Play Passei transforma a matéria em música — você memoriza no trânsito, na academia, no plantão.",
     },
     {
@@ -106,7 +106,7 @@ window.BIO = {
       url: "https://souquestoes.com.br/auth",
       tipo: "externo",
       tema: "grafite",
-      capa: null,
+      capa: "assets/capa-souquestoes.webp",
       pitch: "{nome}, quem já fez prova sabe: o que decide é treino de questão. O Sou Questões te deixa praticar de graça, com correção por IA, no estilo da sua banca.",
     },
   ],
