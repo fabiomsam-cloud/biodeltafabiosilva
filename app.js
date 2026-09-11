@@ -13,7 +13,7 @@
   try { utm = JSON.parse(sessionStorage.getItem("bio_utm") || "{}"); } catch (_) {}
   UTM_KEYS.forEach((k) => { if (qs.get(k)) utm[k] = qs.get(k); });
   if (!utm.utm_source) utm.utm_source = "instagram";
-  if (!utm.utm_medium) utm.utm_medium = "bio";
+  if (!utm.utm_medium) utm.utm_medium = "bio_delta";   // canal_map: subcanal bio_delta (ManyChat manda dm_delta)
   if (!utm.utm_campaign) utm.utm_campaign = B.origem;
   try { sessionStorage.setItem("bio_utm", JSON.stringify(utm)); } catch (_) {}
   let sid;
