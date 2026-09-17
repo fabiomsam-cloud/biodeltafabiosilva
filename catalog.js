@@ -24,6 +24,15 @@ window.BIO = {
   api: "https://dqpxugdhlgafvddavzzp.supabase.co/functions/v1/bio-lead",
   origem: "bio_deltafabiosilva",
 
+  // ------------------------------------------------------------------
+  // MODO DA PÁGINA (17/09/2026 — captação das lives de 28 e 29/09)
+  //   "lives"    → o chat da Anne abre sozinho, a pergunta da farda entrega o
+  //                link de captação na hora e o catálogo de produtos fica oculto.
+  //   "catalogo" → comportamento original: quiz de 5 toques + gate + catálogo.
+  // Depois do carrinho (01/10) é só trocar para "catalogo" — nada mais muda.
+  // ------------------------------------------------------------------
+  modo: "lives",
+
   // Redes — links chegam depois (Fábio); vazio = ícone não aparece
   redes: [
     { id: "instagram", label: "Instagram", url: "https://www.instagram.com/deltafabiosilva" },
@@ -151,6 +160,58 @@ window.BIO = {
       botao: "Ver minha recomendação →",
     },
     despedida: "Qualquer dúvida é só me chamar aqui, {nome}. Rumo à farda! 🚔",
+  },
+
+  // ------------------------------------------------------------------
+  // MODO "lives" — roteamento direto para as páginas de captação.
+  // Cada opção aponta para um destino; destino tipo "whatsapp" abre o wa.me.
+  // Trocar página de captação = trocar a url aqui. Nada em app.js.
+  // ------------------------------------------------------------------
+  lives: {
+    tagline: ["Escolha a sua farda e eu te coloco", "no grupo de estudos certo."],
+    concierge: {
+      titulo: "Qual farda você quer vestir?",
+      sub: "Fale com a Anne, minha assistente. Ela te coloca no grupo de estudos certo em um minuto.",
+    },
+    abertura: "Olá! 👋 Aqui é a Anne, assistente do Delta Fábio. Ele está montando os grupos de estudo das polícias — me diz qual farda você quer vestir que eu te coloco no grupo certo.",
+    perguntaNome: { texto: "Antes de tudo, como posso te chamar?", placeholder: "Escreva seu nome…" },
+    perguntaFarda: "Prazer, {nome}! Qual farda você quer vestir?",
+    despedida: "Qualquer dúvida é só me chamar aqui, {nome}. Rumo à farda! 🚔",
+    opcoes: [
+      { v: "PRF",    t: "PRF · Polícia Rodoviária Federal", destino: "ec_prf" },
+      { v: "PC_AM",  t: "Polícia Civil do Amazonas",        destino: "ss_policias_am" },
+      { v: "PM_AM",  t: "Polícia Militar do Amazonas",      destino: "ss_policias_am" },
+      { v: "PP_AM",  t: "Polícia Penal do Amazonas",        destino: "ss_policias_am" },
+      { v: "OUTRAS", t: "Outras Polícias",                  destino: "anne_vendedora" },
+    ],
+    destinos: {
+      ec_prf: {
+        tag: "SEU PRÓXIMO PASSO",
+        titulo: "Estude Comigo PRF",
+        desc: "Grupo de estudos do Delta no WhatsApp: plano de estudo, material e as aulas ao vivo da preparação para a PRF.",
+        cta: "Entrar no grupo do Estude Comigo PRF",
+        pitch: "{nome}, PRF é o terreno do Delta. O grupo do Estude Comigo PRF está aberto no WhatsApp — é lá que sai o plano de estudo e acontecem as aulas ao vivo. Garanta a sua vaga:",
+        url: "https://fabiomsam-cloud.github.io/aulas-sou-dd1159f8/?a=entre-para-o-grupo-de-estudos-prf-no-whatsapp-1f3f",
+      },
+      ss_policias_am: {
+        tag: "SEU PRÓXIMO PASSO",
+        titulo: "Sala Secreta · Polícias do Amazonas",
+        desc: "Grupo de estudos das Polícias do Amazonas (PC, PM e Penal) no WhatsApp: plano de estudo, material e as aulas ao vivo.",
+        cta: "Entrar na Sala Secreta das Polícias AM",
+        pitch: "{nome}, as polícias do Amazonas estudam no mesmo grupo — PC, PM e Penal caem na mesma base de prova. É lá que o Delta faz as aulas ao vivo. Entra:",
+        url: "https://fabiomsam-cloud.github.io/aulas-sou-dd1159f8/?a=entre-para-o-grupo-de-estudos-das-policias-do-amazonas-pc-pm-358f",
+      },
+      anne_vendedora: {
+        tipo: "whatsapp",
+        tag: "FALE COMIGO",
+        titulo: "Falar com a Anne no WhatsApp",
+        desc: "Me conta qual é o seu concurso que eu te indico o caminho certo com o Delta.",
+        cta: "Chamar a Anne no WhatsApp",
+        pitch: "{nome}, essa eu prefiro resolver com você no olho: me chama no WhatsApp, me diz qual é a sua polícia e eu te mostro o caminho certo.",
+        numero: "559231999420",
+        msg: "Oi Anne! Vim pelo link da bio do Delta Fábio. Quero seguir carreira policial, mas a minha polícia não estava na lista — pode me ajudar?",
+      },
+    },
   },
 
   // ------------------------------------------------------------------

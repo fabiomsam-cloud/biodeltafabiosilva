@@ -1,6 +1,8 @@
 /* biodeltafabiosilva — motor genérico. Lê window.BIO (catalog.js). Não precisa mudar para incluir produto. */
 (function () {
   const B = window.BIO;
+  const L = B.lives || null;
+  const LIVES = (B.modo || "catalogo") === "lives" && !!L;  // captação das lives (catalog.js → modo)
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const fill = (t, d) => String(t || "").replace(/\{(\w+)\}/g, (_, k) => d[k] ?? "");
@@ -41,7 +43,8 @@
   $("#cargo").textContent = P.cargo;
   { const w = P.nome.split(" "); $("#nome").innerHTML = esc(w[0]) + "<br>" + esc(w.slice(1).join(" ")); }
   $("#handle").textContent = P.handle;
-  $("#tagline").innerHTML = esc(P.tagline[0]) + "<br><b>" + esc(P.tagline[1]) + "</b>";
+  { const tl = (LIVES && L.tagline) || P.tagline;
+    $("#tagline").innerHTML = esc(tl[0]) + "<br><b>" + esc(tl[1]) + "</b>"; }
 
   const ICONS = {
     instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.2 2.2.4.6.2 1 .5 1.4.9.4.4.7.8.9 1.4.2.4.4 1 .4 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.2 1.8-.4 2.2-.2.6-.5 1-.9 1.4-.4.4-.8.7-1.4.9-.4.2-1 .4-2.2.4-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.2-2.2-.4-.6-.2-1-.5-1.4-.9-.4-.4-.7-.8-.9-1.4-.2-.4-.4-1-.4-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.2-1.8.4-2.2.2-.6.5-1 .9-1.4.4-.4.8-.7 1.4-.9.4-.2 1-.4 2.2-.4C8.4 2.2 8.8 2.2 12 2.2m0 2.1c-3.1 0-3.5 0-4.8.1-1.1.1-1.5.2-1.8.3-.4.2-.7.3-.9.6-.3.3-.5.5-.6.9-.1.3-.3.7-.3 1.8-.1 1.2-.1 1.6-.1 4.8s0 3.5.1 4.8c.1 1.1.2 1.5.3 1.8.2.4.3.7.6.9.3.3.5.5.9.6.3.1.7.3 1.8.3 1.2.1 1.6.1 4.8.1s3.5 0 4.8-.1c1.1-.1 1.5-.2 1.8-.3.4-.2.7-.3.9-.6.3-.3.5-.5.6-.9.1-.3.3-.7.3-1.8.1-1.2.1-1.6.1-4.8s0-3.5-.1-4.8c-.1-1.1-.2-1.5-.3-1.8-.2-.4-.3-.7-.6-.9-.3-.3-.5-.5-.9-.6-.3-.1-.7-.3-1.8-.3-1.2-.1-1.6-.1-4.8-.1zm0 3.5a5.2 5.2 0 1 1 0 10.4 5.2 5.2 0 0 1 0-10.4zm0 2.1a3.1 3.1 0 1 0 0 6.2 3.1 3.1 0 0 0 0-6.2zm5.4-3.5a1.2 1.2 0 1 1 0 2.4 1.2 1.2 0 0 1 0-2.4z"/></svg>',
@@ -74,6 +77,17 @@
   if (!B.whatsapp.some((w) => w.numero)) $("#whats-sec").hidden = true;
 
   document.querySelectorAll("[data-click]").forEach((a) => a.addEventListener("click", () => track("click", { step: a.dataset.click })));
+
+  /* ---------- modo lives: só o concierge na página ---------- */
+  if (LIVES) {
+    [".sec", "#produtos", "#whats-sec"].forEach((sel) =>
+      document.querySelectorAll(sel).forEach((el) => { el.style.display = "none"; }));
+    if (L.concierge) {
+      const txt = $("#concierge").children[1];
+      if (txt) { txt.querySelector("b").textContent = L.concierge.titulo;
+                 txt.querySelector("span").textContent = L.concierge.sub; }
+    }
+  }
 
   /* ---------- modal de produto (mini-gate para tipo anne) ---------- */
   const pm = $("#pmodal");
@@ -188,10 +202,46 @@
       botMsg(fill(Q.despedida, d()));
     });
   }
+  /* ---------- modo lives: nome → farda → link de captação ---------- */
+  const primeiroNome = (v) => { const n = v.split(/\s+/)[0]; return n ? n[0].toUpperCase() + n.slice(1) : v; };
+
+  function entregarLive(dst, code) {
+    if (!dst) return;
+    track("reco_view", { produto_code: code });
+    const url = dst.tipo === "whatsapp"
+      ? `https://wa.me/${String(dst.numero).replace(/\D/g, "")}?text=${encodeURIComponent(fill(dst.msg, d()))}`
+      : outUrl(dst.url);
+    botMsg(fill(dst.pitch, d()), () => {
+      const c = document.createElement("div"); c.className = "reco";
+      c.innerHTML = `<div class="tag">${esc(dst.tag || "SEU PRÓXIMO PASSO")}</div><h4>${esc(dst.titulo)}</h4><p>${esc(dst.desc)}</p>
+        <div class="acts"><a class="main" href="${esc(url)}" target="_blank" rel="noopener" data-cta="${esc(code)}">${esc(dst.cta)} →</a></div>`;
+      body.appendChild(c); scroll();
+      c.querySelector("[data-cta]").addEventListener("click", () => track("click", { step: "cta_live", produto_code: code }));
+      botMsg(fill(L.despedida, d()));
+    });
+  }
+
+  function startLives() {
+    botMsg(fill(L.abertura, d()), () => botMsg(fill(L.perguntaNome.texto, d()), () => {
+      track("quiz_step", { step: "nome" });
+      textInput(L.perguntaNome.placeholder, (v) => {
+        S.nome = primeiroNome(v); S.resp.nome = v;
+        botMsg(fill(L.perguntaFarda, d()), () => {
+          track("quiz_step", { step: "farda" });
+          choices(L.opcoes, (o) => {
+            S.resp.farda = o.v; S.resp.farda_txt = o.t;
+            entregarLive(L.destinos[o.destino], o.destino);
+          });
+        });
+      });
+    }));
+  }
+
   window.openChat = () => {
     $("#overlay").classList.add("open");
     if (S.started) return;
     S.started = true; track("quiz_start");
+    if (LIVES) return startLives();
     botMsg(Q.abertura, () => choices([{ v: "go", t: Q.inicio }], () => ask(0)));
   };
   window.closeChat = () => $("#overlay").classList.remove("open");
@@ -199,4 +249,5 @@
   $("#cclose").addEventListener("click", closeChat);
 
   track("view");
+  if (LIVES) openChat();   // o link da bio já cai dentro da conversa
 })();
