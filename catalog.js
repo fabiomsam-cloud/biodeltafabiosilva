@@ -25,7 +25,7 @@ window.BIO = {
   origem: "bio_deltafabiosilva",
 
   // ------------------------------------------------------------------
-  // MODO DA PÁGINA (17/09/2026 — captação das lives de 28 e 29/09)
+  // MODO DA PÁGINA (17/09/2026 — captação das lives; desde 19/11 só PC-AM e PRF)
   //   "lives"    → o chat da Anne abre sozinho, a pergunta da farda entrega o
   //                link de captação na hora e o catálogo de produtos fica oculto.
   //   "catalogo" → comportamento original: quiz de 5 toques + gate + catálogo.
@@ -168,48 +168,36 @@ window.BIO = {
   // Trocar página de captação = trocar a url aqui. Nada em app.js.
   // ------------------------------------------------------------------
   lives: {
-    tagline: ["Escolha a sua farda e eu te coloco", "no grupo de estudos certo."],
+    // 19/11/2026 — só 2 concursos (PC-AM e PRF), link direto do grupo na Sendflow.
+    tagline: ["Escolha o seu concurso e eu te coloco", "no grupo de estudos certo."],
     concierge: {
-      titulo: "Qual farda você quer vestir?",
+      titulo: "PC-AM ou PRF?",
       sub: "Fale com a Anne, minha assistente. Ela te coloca no grupo de estudos certo em um minuto.",
     },
-    abertura: "Olá! 👋 Aqui é a Anne, assistente do Delta Fábio. Ele está montando os grupos de estudo das polícias — me diz qual farda você quer vestir que eu te coloco no grupo certo.",
+    abertura: "Olá! 👋 Aqui é a Anne, assistente do Delta Fábio. Ele abriu os grupos de estudos da PC-AM e da PRF no WhatsApp — me diz qual é o seu concurso que eu te coloco no grupo certo.",
     perguntaNome: { texto: "Antes de tudo, como posso te chamar?", placeholder: "Escreva seu nome…" },
-    perguntaFarda: "Prazer, {nome}! Qual farda você quer vestir?",
+    perguntaFarda: "Prazer, {nome}! Qual é o seu concurso?",
     despedida: "Qualquer dúvida é só me chamar aqui, {nome}. Rumo à farda! 🚔",
     opcoes: [
-      { v: "PRF",    t: "PRF · Polícia Rodoviária Federal", destino: "ec_prf" },
-      { v: "PC_AM",  t: "Polícia Civil do Amazonas",        destino: "ss_policias_am" },
-      { v: "PM_AM",  t: "Polícia Militar do Amazonas",      destino: "ss_policias_am" },
-      { v: "PP_AM",  t: "Polícia Penal do Amazonas",        destino: "ss_policias_am" },
-      { v: "OUTRAS", t: "Outras Polícias",                  destino: "anne_vendedora" },
+      { v: "PC_AM", t: "PC-AM · Polícia Civil do Amazonas", destino: "grupo_pcam" },
+      { v: "PRF",   t: "PRF · Polícia Rodoviária Federal",  destino: "grupo_prf" },
     ],
     destinos: {
-      ec_prf: {
+      grupo_pcam: {
         tag: "SEU PRÓXIMO PASSO",
-        titulo: "Estude Comigo PRF",
-        desc: "Grupo de estudos do Delta no WhatsApp: plano de estudo, material e as aulas ao vivo da preparação para a PRF.",
-        cta: "Entrar no grupo do Estude Comigo PRF",
-        pitch: "{nome}, PRF é o terreno do Delta. O grupo do Estude Comigo PRF está aberto no WhatsApp — é lá que sai o plano de estudo e acontecem as aulas ao vivo. Garanta a sua vaga:",
-        url: "https://fabiomsam-cloud.github.io/aulas-sou-dd1159f8/?a=entre-para-o-grupo-de-estudos-prf-no-whatsapp-1f3f",
+        titulo: "Grupo de Estudos PC-AM",
+        desc: "Grupo de estudos do Delta no WhatsApp para a Polícia Civil do Amazonas: plano de estudo, material e as aulas ao vivo.",
+        cta: "Entrar no Grupo de Estudos PC-AM",
+        pitch: "{nome}, o grupo de estudos da PC-AM está aberto no WhatsApp — é lá que sai o plano de estudo e acontecem as aulas ao vivo do Delta. Entra:",
+        url: "https://sndflw.com/i/vJIPvsikXTORq2HAVA8Z",
       },
-      ss_policias_am: {
+      grupo_prf: {
         tag: "SEU PRÓXIMO PASSO",
-        titulo: "Sala Secreta · Polícias do Amazonas",
-        desc: "Grupo de estudos das Polícias do Amazonas (PC, PM e Penal) no WhatsApp: plano de estudo, material e as aulas ao vivo.",
-        cta: "Entrar na Sala Secreta das Polícias AM",
-        pitch: "{nome}, as polícias do Amazonas estudam no mesmo grupo — PC, PM e Penal caem na mesma base de prova. É lá que o Delta faz as aulas ao vivo. Entra:",
-        url: "https://fabiomsam-cloud.github.io/aulas-sou-dd1159f8/?a=entre-para-o-grupo-de-estudos-das-policias-do-amazonas-pc-pm-358f",
-      },
-      anne_vendedora: {
-        tipo: "whatsapp",
-        tag: "FALE COMIGO",
-        titulo: "Falar com a Anne no WhatsApp",
-        desc: "Me conta qual é o seu concurso que eu te indico o caminho certo com o Delta.",
-        cta: "Chamar a Anne no WhatsApp",
-        pitch: "{nome}, essa eu prefiro resolver com você no olho: me chama no WhatsApp, me diz qual é a sua polícia e eu te mostro o caminho certo.",
-        numero: "559231999420",
-        msg: "Oi Anne! Vim pelo link da bio do Delta Fábio. Quero seguir carreira policial, mas a minha polícia não estava na lista — pode me ajudar?",
+        titulo: "Grupo de Estudos PRF",
+        desc: "Grupo de estudos do Delta no WhatsApp para a PRF: plano de estudo, material e as aulas ao vivo.",
+        cta: "Entrar no Grupo de Estudos PRF",
+        pitch: "{nome}, PRF é o terreno do Delta. O grupo de estudos da PRF está aberto no WhatsApp — é lá que sai o plano de estudo e acontecem as aulas ao vivo. Entra:",
+        url: "https://sndflw.com/i/mOYyuf302IWUHITiifsb",
       },
     },
   },
