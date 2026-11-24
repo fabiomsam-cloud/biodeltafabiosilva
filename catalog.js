@@ -179,17 +179,19 @@ window.BIO = {
     perguntaFarda: "Prazer, {nome}! Qual é o seu concurso?",
     despedida: "Qualquer dúvida é só me chamar aqui, {nome}. Rumo à farda! 🚔",
     opcoes: [
-      { v: "PC_AM", t: "PC-AM · Polícia Civil do Amazonas", destino: "grupo_pcam" },
+      { v: "PC_AM", t: "PC-AM · Polícia Civil do Amazonas", destino: "black_pcam" },   // 24/11: página da Black (antes: grupo_pcam)
       { v: "PRF",   t: "PRF · Polícia Rodoviária Federal",  destino: "grupo_prf" },
     ],
     destinos: {
-      grupo_pcam: {
+      // 24/11/2026 (pedido do Fábio): PC-AM vai para a página da Black (turma de fundadores) em vez do grupo.
+      // Grupo antigo, se precisar voltar: https://sndflw.com/i/vJIPvsikXTORq2HAVA8Z
+      black_pcam: {
         tag: "SEU PRÓXIMO PASSO",
-        titulo: "Grupo de Estudos PC-AM",
-        desc: "Grupo de estudos do Delta no WhatsApp para a Polícia Civil do Amazonas: plano de estudo, material e as aulas ao vivo.",
-        cta: "Entrar no Grupo de Estudos PC-AM",
-        pitch: "{nome}, o grupo de estudos da PC-AM está aberto no WhatsApp — é lá que sai o plano de estudo e acontecem as aulas ao vivo do Delta. Entra:",
-        url: "https://sndflw.com/i/vJIPvsikXTORq2HAVA8Z",
+        titulo: "Mentoria Elite PC-AM · Turma de Fundadores",
+        desc: "Investigador e Escrivão da Polícia Civil do Amazonas: de R$ 1.997 por R$ 797 no Pix ou 12x de R$ 79,74. Garantia de 7 dias.",
+        cta: "Ver a condição da turma de fundadores",
+        pitch: "{nome}, o Delta liberou a condição da turma de fundadores da Mentoria Elite PC-AM: mais de 60% de desconto. Assista ao recado dele e garanta a sua vaga:",
+        url: "https://fabiomsam-cloud.github.io/acao-desconto-d69ecfc8/black-pcam/",
       },
       grupo_prf: {
         tag: "SEU PRÓXIMO PASSO",
