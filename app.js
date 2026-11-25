@@ -221,6 +221,24 @@
     });
   }
 
+  // escolha do concurso; opção com "pergunta" faz uma pergunta extra antes do destino
+  // (resposta com "voltar" mostra as outras opções de novo)
+  function escolherLive(lista) {
+    choices(lista, (o) => {
+      S.resp.farda = o.v; S.resp.farda_txt = o.t;
+      if (!o.pergunta) return entregarLive(L.destinos[o.destino], o.destino);
+      const pq = o.pergunta;
+      botMsg(fill(pq.texto, d()), () => {
+        track("quiz_step", { step: pq.chave });
+        choices(pq.opcoes, (r) => {
+          S.resp[pq.chave] = r.v;
+          if (r.destino) return entregarLive(L.destinos[r.destino], r.destino);
+          if (r.voltar) botMsg(fill(r.texto, d()), () => escolherLive(L.opcoes.filter((x) => x !== o)));
+        });
+      });
+    });
+  }
+
   function startLives() {
     botMsg(fill(L.abertura, d()), () => botMsg(fill(L.perguntaNome.texto, d()), () => {
       track("quiz_step", { step: "nome" });
@@ -228,10 +246,7 @@
         S.nome = primeiroNome(v); S.resp.nome = v;
         botMsg(fill(L.perguntaFarda, d()), () => {
           track("quiz_step", { step: "farda" });
-          choices(L.opcoes, (o) => {
-            S.resp.farda = o.v; S.resp.farda_txt = o.t;
-            entregarLive(L.destinos[o.destino], o.destino);
-          });
+          escolherLive(L.opcoes);
         });
       });
     }));

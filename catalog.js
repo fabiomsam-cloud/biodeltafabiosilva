@@ -168,19 +168,29 @@ window.BIO = {
   // Trocar página de captação = trocar a url aqui. Nada em app.js.
   // ------------------------------------------------------------------
   lives: {
-    // 19/11/2026 — só 2 concursos (PC-AM e PRF), link direto do grupo na Sendflow.
-    tagline: ["Escolha o seu concurso e eu te coloco", "no grupo de estudos certo."],
+    // 19/11/2026 — só 2 concursos (PC-AM e PRF). 25/11: + Delegado de Polícia (só formado em Direito).
+    tagline: ["Escolha o seu concurso e eu te levo", "direto para o lugar certo."],
     concierge: {
-      titulo: "PC-AM ou PRF?",
-      sub: "Fale com a Anne, minha assistente. Ela te coloca no grupo de estudos certo em um minuto.",
+      titulo: "PC-AM, PRF ou Delegado?",
+      sub: "Fale com a Anne, minha assistente. Ela te leva para o lugar certo em um minuto.",
     },
-    abertura: "Olá! 👋 Aqui é a Anne, assistente do Delta Fábio. Ele abriu os grupos de estudos da PC-AM e da PRF no WhatsApp — me diz qual é o seu concurso que eu te coloco no grupo certo.",
+    abertura: "Olá! 👋 Aqui é a Anne, assistente do Delta Fábio. Me diz qual é o seu concurso que eu te levo direto para o lugar certo.",
     perguntaNome: { texto: "Antes de tudo, como posso te chamar?", placeholder: "Escreva seu nome…" },
     perguntaFarda: "Prazer, {nome}! Qual é o seu concurso?",
     despedida: "Qualquer dúvida é só me chamar aqui, {nome}. Rumo à farda! 🚔",
     opcoes: [
       { v: "PC_AM", t: "PC-AM · Polícia Civil do Amazonas", destino: "black_pcam" },   // 24/11: página da Black (antes: grupo_pcam)
-      { v: "PRF",   t: "PRF · Polícia Rodoviária Federal",  destino: "grupo_prf" },
+      { v: "PRF",   t: "PRF · Polícia Rodoviária Federal",  destino: "web_prf2027" },   // 25/11: webinário da Black (antes: grupo_prf)
+      // 25/11: Delegado tem pergunta extra. "sim" → grupo; "não" → Anne explica e mostra as outras opções (voltar: true).
+      { v: "DELEGADO", t: "Delegado de Polícia", pergunta: {
+          chave: "formado_direito",
+          texto: "{nome}, o cargo de Delegado exige formação em Direito. Você já é formado(a) em Direito?",
+          opcoes: [
+            { v: "SIM", t: "Sim, sou formado(a) em Direito", destino: "grupo_delegado" },
+            { v: "NAO", t: "Ainda não", voltar: true,
+              texto: "Sem problema, {nome}! Para Delegado o diploma de Direito é obrigatório, mas você pode começar agora por um destes concursos:" },
+          ],
+      } },
     ],
     destinos: {
       // 24/11/2026 (pedido do Fábio): PC-AM vai para a página da Black (turma de fundadores) em vez do grupo.
@@ -193,6 +203,25 @@ window.BIO = {
         pitch: "{nome}, o Delta liberou a condição da turma de fundadores da Mentoria Elite PC-AM: mais de 60% de desconto. Assista ao recado dele e garanta a sua vaga:",
         url: "https://fabiomsam-cloud.github.io/acao-desconto-d69ecfc8/black-pcam/",
       },
+      // 25/11/2026 (pedido do Fábio): PRF vai para o webinário da Black (prf2027, aula da live de 23/11).
+      web_prf2027: {
+        tag: "SEU PRÓXIMO PASSO",
+        titulo: "Aula PRF 2027 · As 3 chaves para ser aprovado",
+        desc: "Aula do Delta com as 3 chaves para ser aprovado na PRF começando agora.",
+        cta: "Assistir à aula da PRF",
+        pitch: "{nome}, PRF é o terreno do Delta. Ele gravou uma aula mostrando as 3 chaves para ser aprovado na PRF começando agora. Assista:",
+        url: "https://fabiomsam-cloud.github.io/sou-webinario-52b91323/?w=prf2027",
+      },
+      // 25/11/2026: grupo PREPARAÇÃO DELEGADO na Sendflow (só para quem é formado em Direito).
+      grupo_delegado: {
+        tag: "SEU PRÓXIMO PASSO",
+        titulo: "Grupo Preparação Delegado",
+        desc: "Grupo do Delta no WhatsApp para quem é formado em Direito e quer ser Delegado de Polícia.",
+        cta: "Entrar no Grupo Preparação Delegado",
+        pitch: "{nome}, Delegado é a carreira do Delta. O grupo Preparação Delegado está aberto no WhatsApp para quem é formado em Direito. Entra:",
+        url: "https://sndflw.com/i/4SXUAleyziaXLcjpITf4",
+      },
+      // grupo antigo da PRF, se precisar voltar: destino "grupo_prf"
       grupo_prf: {
         tag: "SEU PRÓXIMO PASSO",
         titulo: "Grupo de Estudos PRF",
