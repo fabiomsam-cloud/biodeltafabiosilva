@@ -181,14 +181,13 @@ window.BIO = {
     opcoes: [
       { v: "PC_AM", t: "PC-AM · Polícia Civil do Amazonas", destino: "black_pcam" },   // 24/11: página da Black (antes: grupo_pcam)
       { v: "PRF",   t: "PRF · Polícia Rodoviária Federal",  destino: "web_prf2027" },   // 25/11: webinário da Black (antes: grupo_prf)
-      // 25/11: Delegado tem pergunta extra. "sim" → grupo; "não" → Anne explica e mostra as outras opções (voltar: true).
+      // 25/11: Delegado tem pergunta extra. "sim" → grupo Preparação Delegado; "não" → WhatsApp da Anne.
       { v: "DELEGADO", t: "Delegado de Polícia", pergunta: {
           chave: "formado_direito",
           texto: "{nome}, o cargo de Delegado exige formação em Direito. Você já é formado(a) em Direito?",
           opcoes: [
             { v: "SIM", t: "Sim, sou formado(a) em Direito", destino: "grupo_delegado" },
-            { v: "NAO", t: "Ainda não", voltar: true,
-              texto: "Sem problema, {nome}! Para Delegado o diploma de Direito é obrigatório, mas você pode começar agora por um destes concursos:" },
+            { v: "NAO", t: "Ainda não", destino: "anne_delegado" },
           ],
       } },
     ],
@@ -220,6 +219,18 @@ window.BIO = {
         cta: "Entrar no Grupo Preparação Delegado",
         pitch: "{nome}, Delegado é a carreira do Delta. O grupo Preparação Delegado está aberto no WhatsApp para quem é formado em Direito. Entra:",
         url: "https://sndflw.com/i/4SXUAleyziaXLcjpITf4",
+      },
+      // 25/11/2026: quem quer Delegado e NÃO é formado em Direito fala com a Anne no WhatsApp.
+      // A mensagem pronta não casa com nenhuma palavra-chave de agente (conferido 25/11) → agente padrão da Anne.
+      anne_delegado: {
+        tipo: "whatsapp",
+        tag: "FALE COMIGO",
+        titulo: "Falar com a Anne no WhatsApp",
+        desc: "Me chama no WhatsApp que eu te mostro o caminho até Delegado de Polícia.",
+        cta: "Chamar a Anne no WhatsApp",
+        pitch: "{nome}, para Delegado o diploma de Direito é obrigatório. Me chama no WhatsApp que eu te mostro o caminho certo para você:",
+        numero: "559231999420",
+        msg: "Oi Anne! Vim pelo link da bio do Delta Fábio. Quero ser Delegado de Polícia, mas ainda não sou formado em Direito. Pode me ajudar?",
       },
       // grupo antigo da PRF, se precisar voltar: destino "grupo_prf"
       grupo_prf: {
